@@ -1,3 +1,5 @@
-'''$ganache-cli
+```
+$ganache-cli
 $truffle compile
-$truffle migrate'''
+$truffle migrate
+```
