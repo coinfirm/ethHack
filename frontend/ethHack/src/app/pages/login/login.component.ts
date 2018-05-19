@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ContractsService } from '../../contracts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ export class LoginComponent {
   public done = false;
   public loading = false;
 
-  constructor(contractsService: ContractsService) {
+  constructor(private router: Router, contractsService: ContractsService) {
   }
 
   public doneClick() {
@@ -18,6 +19,9 @@ export class LoginComponent {
     setTimeout(() => {
       this.loading = false;
       this.done = true;
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 1500);
     }, 2000);
   }
 }

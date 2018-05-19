@@ -53,8 +53,8 @@ export class ContractsService {
             const v = this._web3.toDecimal('0x' + sig.slice(128, 130));
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
-            // 'addr' added to add the addr to id
-             this._tokenContract.executeSigned(addr, h, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
+            // 'addr' to add the addr to id
+             this._tokenContract.executeSigned(h, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
                console.log('err: ', err2);
                console.log('execute: ', result);
              });
