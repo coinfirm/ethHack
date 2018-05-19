@@ -25,22 +25,33 @@ export class LoginComponent {
   public doneClick() {
     this.loading = true;
     this.error = false;
-    console.log('this key: ', this.key);
-    this.contractsService.getKey(1).then((key) => {
-      if (key === this.key) {
-        this.loading = false;
-        this.done = true;
-        setTimeout(() => {
-          this.router.navigate(['/home']);
-        }, 1500);
-      } else {
-        this.error = true;
-        this.loading = false;
+    this.contractsService.keysSize().then((size) => {
+      for (let i = 0; i < parseInt(size, 10); i++) {
+        this.getKey(i).then((key) => {
+          if (key === this.key) {
+            this.loading = false;
+            this.done = true;
+            setTimeout(() => {
+              this.router.navigate(['/home']);
+            }, 1500);
+          } else if ((key === '0x0000000000000000000000000000000000000000' || i === (parseInt(size, 10) - 1)) && !this.done) {
+            this.error = true;
+            this.loading = false;
+          }
+        });
       }
     });
   }
 
+  private getKey(index): Promise < string > {
+  return new Promise((resolve, reject) => {
+    this.contractsService.getKey(index).then((key) => {
+      resolve(key);
+    });
+  });
+}
+
   public add() {
-    this.contractsService.executeSign();
-  }
+  this.contractsService.executeSign();
+}
 }

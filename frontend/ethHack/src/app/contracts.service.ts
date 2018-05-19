@@ -98,4 +98,16 @@ export class ContractsService {
       });
     }) as Promise<string>;
   }
+
+  public async keysSize(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+      this._tokenContract.keysSize.call(function (err, result) {
+        if (err != null) {
+          reject(err);
+        }
+        resolve((result));
+      });
+    }) as Promise<string>;
+  }
 }
