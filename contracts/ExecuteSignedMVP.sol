@@ -17,6 +17,12 @@ contract ExecuteSignedMVP{
 
     uint private keysCounter = 0;
 
+    function ExecuteSignedMVP() public
+    {
+        owner = msg.sender;
+        keys[keysCounter++]._key = owner;
+    }
+
     function keysSize() public view returns(uint)
     {
         return keysCounter;
@@ -24,6 +30,7 @@ contract ExecuteSignedMVP{
 
     function removeKey(uint _id) public
     {
+        require(owner == msg.sender);
         delete keys[_id];
     }
 
@@ -86,10 +93,6 @@ contract ExecuteSignedMVP{
             return ecrecover(prefixedHash, v, r, s) == signer;
         }
     */
-    function ExecuteSignedMVP() public
-    {
-        owner = msg.sender;
-    }
 
     function kill() public
     {
