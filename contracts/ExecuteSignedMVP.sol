@@ -18,7 +18,7 @@ contract ExecuteSignedMVP{
 
     uint private keysCounter = 0;
 
-    constructor() public
+    constructor() public payable 
     {
         owner = msg.sender;
         keys[keysCounter++]._key = owner;
