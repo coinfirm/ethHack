@@ -1,5 +1,5 @@
-var Func = artifacts.require("./Func.sol");
+var Exec = artifacts.require("./ExecuteSignedMVP.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Func);
+  deployer.deploy(Exec);
 };
