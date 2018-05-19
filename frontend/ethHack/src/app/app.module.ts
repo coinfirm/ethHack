@@ -1,3 +1,4 @@
+import { SendToComponent } from './sendTo/sendTo.component';
 import { RocketComponent } from './rocket/rocket.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     HomeComponent,
     RocketComponent,
+    SendToComponent,
   ],
   imports: [
     BrowserModule,
