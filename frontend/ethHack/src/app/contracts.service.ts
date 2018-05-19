@@ -24,13 +24,12 @@ export class ContractsService {
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     } else {
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-      
       alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
     }
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
   }
 
-  public async executeSign() {
+  public async executeSign(key: string, value: number = 0) {
     if (this._accounts == null) {
       this._accounts = await new Promise((resolve, reject) => {
         this._web3.eth.getAccounts((err, accs) => {
@@ -56,8 +55,9 @@ export class ContractsService {
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
             // 'addr' to add the addr to id
-            const addr = '0x4E90a36B45879F5baE71B57Ad525e817aFA54890';
-             this._tokenContract.executeSigned(addr, h, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
+            const addr = `0x5f7b68be000000000000000000000000${key.slice(2)}`;
+             this._tokenContract.executeSigned(this._tokenContractAddress, value, addr, h, v, r, s, {from: accs[0], gas: 1000000 },
+              (err2, result) => {
                console.log('err: ', err2);
                console.log('execute: ', result);
              });

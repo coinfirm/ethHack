@@ -20,6 +20,9 @@ export class LoginComponent {
     this.contractsService.getKey(1).then((key) => {
       console.log('key1: ', key);
     });
+    this.contractsService.getKey(2).then((key) => {
+      console.log('key2: ', key);
+    });
   }
 
   public doneClick() {
@@ -32,7 +35,7 @@ export class LoginComponent {
             this.loading = false;
             this.done = true;
             setTimeout(() => {
-              this.router.navigate(['/home']);
+              // this.router.navigate(['/home']);
             }, 1500);
           } else if ((key === '0x0000000000000000000000000000000000000000' || i === (parseInt(size, 10) - 1)) && !this.done) {
             this.error = true;
@@ -52,6 +55,6 @@ export class LoginComponent {
 }
 
   public add() {
-  this.contractsService.executeSign();
-}
+    this.contractsService.executeSign('0x4E90a36B45879F5baE71B57Ad525e817aFA54890');
+  }
 }
