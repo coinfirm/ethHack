@@ -35,7 +35,7 @@ contract ExecuteSignedMVP{
 
     function executeSigned(address _address, bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s) public returns(bool)
     {
-/*        
+/*
         bytes32 _hash = 0xe38d912e5b3f9731997644f985b4d246ce75ec73109c3cbeeaeb2ae437bba44f;
         uint8 _v = 27;
         bytes32 _r = 0x81be64f2074fcf7a3b744d035683e48901f19233949e8f60eba849a355e8d6e3;
@@ -75,8 +75,9 @@ contract ExecuteSignedMVP{
     {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(prefix, hash);
-        emit returnAddress(ecrecover(prefixedHash, v, r, s));
-        return ecrecover(prefixedHash, v, r, s) == signer;
+        address src = ecrecover(prefixedHash,v,r,s);
+        emit returnAddress(src);
+        return src == signer;
     }
 */    
     function ExecuteSignedMVP() public
