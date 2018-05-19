@@ -20,12 +20,12 @@ export class ContractsService {
   constructor() {
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
-      // this._web3 = new Web3(window.web3.currentProvider);
-      this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+      this._web3 = new Web3(window.web3.currentProvider);
+      // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     } else {
-      this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+      // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
       
-      // alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
+      alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
     }
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
   }
@@ -53,7 +53,8 @@ export class ContractsService {
             const v = this._web3.toDecimal('0x' + sig.slice(128, 130));
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
-             this._tokenContract.executeSigned(msg, sig, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
+            // 'addr' to add the addr to id
+             this._tokenContract.executeSigned(h, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
                console.log('err: ', err2);
                console.log('execute: ', result);
              });
@@ -88,51 +89,15 @@ export class ContractsService {
     return Promise.resolve(this._accounts);
   }
 
-  private async getAccount(): Promise<string> {
-    if (this._account == null) {
-      this._account = await new Promise((resolve, reject) => {
-        this._web3.eth.getAccounts((err, accs) => {
-          if (err != null) {
-            alert('There was an error fetching your accounts.');
-            return;
-          }
-          if (accs.length === 0) {
-            alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
-            return;
-          }
-          resolve(accs[0]);
-        });
-      }) as string;
-      this._web3.eth.defaultAccount = this._account;
-    }
-    return Promise.resolve(this._account);
-  }
-
-  public async getBark(): Promise<string> {
-    const account = await this.getAccount();
+  public async getKey(index): Promise<string> {
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
-      this._tokenContract.bark.call(function (err, result) {
+      this._tokenContract.getKey.call(index, function (err, result) {
         if (err != null) {
           reject(err);
         }
         resolve((result));
       });
     }) as Promise<string>;
-  }
-
-  public async setText(text: string) {
-    this._tokenContract.setText(text, { from: await this.getAccount() }, (err, result) => { });
-  }
-
-  public async getText(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this._tokenContract.text.call((err, result) => {
-        if (err != null) {
-          reject(err);
-        }
-        resolve((result));
-      });
-    });
   }
 }
