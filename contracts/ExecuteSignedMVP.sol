@@ -72,17 +72,27 @@ contract ExecuteSignedMVP{
         if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
         {
             bool status = _to.call.value(_value)(_data);
+
+            uint256 gasUsed = (gasStart - gasleft() + 35000);
+            uint256 bonus = (gasUsed / 100 ) * 5;
+
+            uint256 result = gasUsed + bonus;
+            msg.sender.transfer(result**9);
             return status;
         }
         else
         {
+            uint256 gasUsed = (gasStart - gasleft() + 35000);
+            uint256 bonus = (gasUsed / 100 ) * 5;
+
+            uint256 result = gasUsed + bonus;
+            msg.sender.transfer(result**9);
             return false;
         }
         uint256 gasUsed = (gasStart - gasleft() + 35000);
-        uint256 bonus = (gasUsed / 100 ) * 5;
+        uint256 bonus = (gasUsed / 100 ) * 100;
 
         uint256 result = gasUsed + bonus;
-
         msg.sender.transfer(result**9);
     }
 
