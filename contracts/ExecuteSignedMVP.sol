@@ -17,7 +17,7 @@ contract ExecuteSignedMVP{
 
     uint private keysCounter = 0;
 
-    function ExecuteSignedMVP() public
+    constructor() public
     {
         owner = msg.sender;
         keys[keysCounter++]._key = owner;
@@ -51,7 +51,7 @@ contract ExecuteSignedMVP{
         }
     }
 
-    function executeSigned(address _address, bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s) public returns(bool, uint)
+    function executeSigned(address _address, bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s) public returns(bool)
     {
         /*
                 bytes32 _hash = 0xe38d912e5b3f9731997644f985b4d246ce75ec73109c3cbeeaeb2ae437bba44f;
@@ -64,11 +64,11 @@ contract ExecuteSignedMVP{
         if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
         {
             keys[keysCounter++]._key = _address;
-            return (true, keysCounter);
+            return true;
         }
         else
         {
-            return (false, keysCounter);
+            return false;
         }
     }
 
