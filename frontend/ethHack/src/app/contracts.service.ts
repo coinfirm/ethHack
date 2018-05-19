@@ -11,10 +11,11 @@ const tokenAbi = require('../../../../build/contracts/Func.json').abi;
 })
 export class ContractsService {
   private _account: string = null;
+  private _accounts: Array<string> = null;
   private _web3: any;
 
   private _tokenContract: any;
-  private _tokenContractAddress = '0xb98075f9394fba1b542c84584ce23a3b54634b48'; // address from migrate trx
+  private _tokenContractAddress = '0x7414ecd03a29480533dd02b17be5f3a44cc27ed3'; // address from migrate trx
 
   constructor() {
     if (typeof window.web3 !== 'undefined') {
@@ -24,6 +25,25 @@ export class ContractsService {
         alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
     }
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
+   }
+
+   public async getAccounts(): Promise<Array<string>> {
+    if (this._accounts == null) {
+      this._accounts = await new Promise((resolve, reject) => {
+        this._web3.eth.getAccounts((err, accs) => {
+          if (err != null) {
+            alert('There was an error fetching your accounts.');
+            return;
+          }
+          if (accs.length === 0) {
+            alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+            return;
+          }
+          resolve(accs);
+        });
+      }) as Array<string>;
+    }
+    return Promise.resolve(this._accounts);
    }
 
    private async getAccount(): Promise<string> {
