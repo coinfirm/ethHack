@@ -22,12 +22,26 @@ export class ContractsService {
       // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
     } else {
-        alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
+      alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
     }
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
-   }
+  }
 
-   public async getAccounts(): Promise<Array<string>> {
+  public test() {
+    const msg = '0x8CbaC5e4d803bE2A3A5cd3DbE7174504c6DD0c1C';
+
+    const h = this._web3.sha3(msg);
+    this._web3.eth.sign(this._account, h, (err, sig) => {
+      console.log('callback');
+      sig = sig.slice(2);
+      const r = `0x${sig.slice(0, 64)}`;
+      const s = `0x${sig.slice(64, 128)}`;
+      const v = this._web3.toDecimal('0x' + sig.slice(128, 130));
+      console.log({sig, r, s, v});
+    });
+  }
+
+  public async getAccounts(): Promise<Array<string>> {
     if (this._accounts == null) {
       this._accounts = await new Promise((resolve, reject) => {
         this._web3.eth.getAccounts((err, accs) => {
@@ -44,9 +58,9 @@ export class ContractsService {
       }) as Array<string>;
     }
     return Promise.resolve(this._accounts);
-   }
+  }
 
-   private async getAccount(): Promise<string> {
+  private async getAccount(): Promise<string> {
     if (this._account == null) {
       this._account = await new Promise((resolve, reject) => {
         this._web3.eth.getAccounts((err, accs) => {
@@ -80,7 +94,7 @@ export class ContractsService {
   }
 
   public async setText(text: string) {
-    this._tokenContract.setText(text, {from: await this.getAccount()}, (err, result) => {});
+    this._tokenContract.setText(text, { from: await this.getAccount() }, (err, result) => { });
   }
 
   public async getText(): Promise<any> {
