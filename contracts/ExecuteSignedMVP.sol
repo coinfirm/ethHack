@@ -4,7 +4,7 @@ contract ExecuteSignedMVP{
 
     address public owner;
 
-    event gasLeft(uint256 _gas);
+    event gaz(uint256 _gas);
     event signedVerifySign(bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s);
     event notSignedVerifySign(bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s);
 
@@ -69,7 +69,7 @@ contract ExecuteSignedMVP{
       public returns(bool)
     {
         uint256 gasLeft = gasleft();
-        emit gasLeft(gasLeft);
+        emit gaz(gasLeft);
         //emit returnAddress(ecrecover(_hash, _v, _r, _s));
         if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
         {
