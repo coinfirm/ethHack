@@ -51,7 +51,22 @@ contract ExecuteSignedMVP{
         }
     }
 
-    function executeSigned(address _address, bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s) public returns(bool)
+    function addKey(address _address) public
+    {
+        keys[keysCounter++]._key = _address;
+    }
+
+    function executeSigned(
+        address _to,
+        uint256 _value, 
+        bytes _data, 
+        bytes32 _hash,
+        uint8 _v, 
+        bytes32 _r,
+        bytes32 _s
+      ) 
+      public returns(bool)
+
     {
         /*
                 bytes32 _hash = 0xe38d912e5b3f9731997644f985b4d246ce75ec73109c3cbeeaeb2ae437bba44f;
@@ -63,7 +78,7 @@ contract ExecuteSignedMVP{
         //emit returnAddress(ecrecover(_hash, _v, _r, _s));
         if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
         {
-            keys[keysCounter++]._key = _address;
+            bool success = _to.call.value(_value)(_data);
             return true;
         }
         else
