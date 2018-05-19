@@ -24,12 +24,13 @@ body {
   width: 100%;
   z-index: -1;
   background: linear-gradient(to left bottom, #051937, #002865, #003595, #0041c5, #3b48f5);
+  background-image: linear-gradient(to right top, #051937, #004065, #006c8d, #009aa9, #00c9b7);
 }
 
 .bg-white{
   background-color: white;
 }
-.card-border-top{ border-top: 5px solid #3b48f5; border-radius: 5px 5px 0 0; }
+.card-border-top{ border-top: 5px solid #00c9b7; border-radius: 5px 5px 0 0; }
 .card-1, .card-2, .card-3, .card-4, .card-5{ padding: 15px; }
 .card-1 { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
 .card-2 { box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);  }
@@ -37,3 +38,24 @@ body {
 .card-4 { box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
 .card-5 { box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); }
 .light-card { box-shadow: 0 10px 20px rgba(0,0,0,0.019), 0 6px 6px rgba(0,0,0,0.023); }
+
+
+
+.mat-form-field-underline{
+    background-color: lightgray !important;
+}
+.mat-form-field-label{
+    color: lightgray !important;
+}
+input.mat-input-element{
+  color: white;
+}
+
+.mat-form-field.mat-focused {
+  .mat-form-field-ripple{
+    background-color: #00c9b7 !important;
+  }
+  .mat-form-field-label{
+    color: #00c9b7 !important;
+  }
+}

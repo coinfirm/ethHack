@@ -1,10 +1,14 @@
-<h1>Login</h1>
-<section class="bg-white card-2 card-border-top">
+<section>
   <form>
     <h1>HackETH</h1>
-      <label>
-        <input type="text" placeholder="Public key">
-      </label>
-      <button>Log in</button>
+    <!-- <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Public key" value="example">
+      </mat-form-field>
+    </form>  -->
+    <input type="text" placeholder="Public key">
+    <button *ngIf="!loading && !done" mat-button (click)="doneClick()" type="button">Log in</button>
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    <svg *ngIf="done" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
   </form>
 </section>

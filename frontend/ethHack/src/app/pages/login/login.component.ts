@@ -7,9 +7,17 @@ import { ContractsService } from '../../contracts.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  public bark: string;
-  public text: string;
-  public accounts: Array<string>;
+  public done = false;
+  public loading = false;
 
-  constructor(contractsService: ContractsService) {}
+  constructor(contractsService: ContractsService) {
+  }
+
+  public doneClick() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+      this.done = true;
+    }, 2000);
+  }
 }

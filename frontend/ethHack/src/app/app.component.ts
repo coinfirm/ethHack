@@ -12,7 +12,7 @@ export class AppComponent {
   public accounts: Array<string>;
 
   constructor(contractsService: ContractsService) {
-    contractsService.test();
+    // contractsService.test();
     // contractsService.getBark().then(bark => {
     //   contractsService.test();
     //   this.bark = bark;
