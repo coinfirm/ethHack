@@ -12,12 +12,13 @@ export class AppComponent {
   public accounts: Array<string>;
 
   constructor(contractsService: ContractsService) {
-    contractsService.getBark().then(bark => {
-      contractsService.test();
-      this.bark = bark;
-    });
-    // contractsService.setText('dupax');
-    contractsService.getText().then(text => this.text = text);
-    contractsService.getAccounts().then(accs => this.accounts = accs);
+    contractsService.test();
+    // contractsService.getBark().then(bark => {
+    //   contractsService.test();
+    //   this.bark = bark;
+    // });
+    // // contractsService.setText('dupax');
+    // contractsService.getText().then(text => this.text = text);
+    // contractsService.getAccounts().then(accs => this.accounts = accs);
   }
 }
