@@ -4,6 +4,7 @@ contract ExecuteSignedMVP{
 
     address public owner;
 
+    event gasLeft(uint256 _gas);
     event signedVerifySign(bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s);
     event notSignedVerifySign(bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s);
 
@@ -66,15 +67,9 @@ contract ExecuteSignedMVP{
         bytes32 _s
       ) 
       public returns(bool)
-
     {
-        /*
-                bytes32 _hash = 0xe38d912e5b3f9731997644f985b4d246ce75ec73109c3cbeeaeb2ae437bba44f;
-                uint8 _v = 27;
-                bytes32 _r = 0x81be64f2074fcf7a3b744d035683e48901f19233949e8f60eba849a355e8d6e3;
-                bytes32 _s = 0x08a708eb4873f94a3ace43c5a5860c9dba86dadf33113c58c854ec3b0df459b3;
-        */
-
+        uint256 gasLeft = gasleft();
+        emit gasLeft(gasLeft);
         //emit returnAddress(ecrecover(_hash, _v, _r, _s));
         if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
         {
