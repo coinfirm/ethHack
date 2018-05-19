@@ -32,7 +32,7 @@ export class LoginComponent {
             this.loading = false;
             this.done = true;
             setTimeout(() => {
-              this.router.navigate(['/home']);
+              // this.router.navigate(['/home']);
             }, 1500);
           } else if ((key === '0x0000000000000000000000000000000000000000' || i === (parseInt(size, 10) - 1)) && !this.done) {
             this.error = true;

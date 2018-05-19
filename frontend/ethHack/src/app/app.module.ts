@@ -1,3 +1,4 @@
+import { RocketComponent } from './rocket/rocket.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     LoginComponent,
     HomeComponent,
+    RocketComponent,
   ],
   imports: [
     BrowserModule,

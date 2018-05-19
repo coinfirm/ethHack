@@ -3,6 +3,11 @@
 @import '~bootstrap/scss/bootstrap-grid';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+html{
+  max-height: 100vh;
+  overflow: hidden;
+}
+
 body { 
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
