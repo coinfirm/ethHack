@@ -68,32 +68,31 @@ contract ExecuteSignedMVP{
       ) 
       public returns(bool)
     {
-        uint256 gasStart = gasleft();
+        uint256 gasStart;
+        uint256 gasUsed;
+        uint256 bonus;
+        uint256 result;
+        gasStart = gasleft();
         if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
         {
             bool status = _to.call.value(_value)(_data);
 
-            uint256 gasUsed = (gasStart - gasleft() + 35000);
-            uint256 bonus = (gasUsed / 100 ) * 5;
+            gasUsed = (gasStart - gasleft() + 35000);
+            bonus = (gasUsed / 100 ) * 5;
 
-            uint256 result = gasUsed + bonus;
+            result = gasUsed + bonus;
             msg.sender.transfer(result**9);
             return status;
         }
         else
         {
-            uint256 gasUsed = (gasStart - gasleft() + 35000);
-            uint256 bonus = (gasUsed / 100 ) * 5;
+            gasUsed = (gasStart - gasleft() + 35000);
+            bonus = (gasUsed / 100 ) * 5;
 
-            uint256 result = gasUsed + bonus;
+            result = gasUsed + bonus;
             msg.sender.transfer(result**9);
             return false;
         }
-        uint256 gasUsed = (gasStart - gasleft() + 35000);
-        uint256 bonus = (gasUsed / 100 ) * 100;
-
-        uint256 result = gasUsed + bonus;
-        msg.sender.transfer(result**9);
     }
 
     function verifySign(address _p, bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s) private pure returns(bool)
