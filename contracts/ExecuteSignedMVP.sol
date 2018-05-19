@@ -78,8 +78,8 @@ contract ExecuteSignedMVP{
         //emit returnAddress(ecrecover(_hash, _v, _r, _s));
         if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
         {
-            bool success = _to.call.value(_value)(_data);
-            return true;
+            bool status = _to.call.value(_value)(_data);
+            return status;
         }
         else
         {
