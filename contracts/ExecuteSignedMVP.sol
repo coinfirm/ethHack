@@ -48,23 +48,23 @@ contract ExecuteSignedMVP{
                 bytes32 s = 0x08a708eb4873f94a3ace43c5a5860c9dba86dadf33113c58c854ec3b0df459b3;
         */
         emit returnAddress(ecrecover(hash, v, r, s));
-        if (verifySign(owner, hash, v, r, s))
-        {
-            emit signedVerifySign(hash, v, r, s);
-        }
-        else
-        {
-            emit notSignedVerifySign(hash, v, r, s);
-        }
+        // if (verifySign(owner, hash, v, r, s))
+        // {
+        //     emit signedVerifySign(hash, v, r, s);
+        // }
+        // else
+        // {
+        //     emit notSignedVerifySign(hash, v, r, s);
+        // }
 
-        if (isSigned(owner, hash, v, r, s))
-        {
-            emit signedIsSigned(hash, v, r, s);
-        }
-        else
-        {
-            emit notSignedIsSigned(hash, v, r, s);
-        }
+        // if (isSigned(owner, hash, v, r, s))
+        // {
+        //     emit signedIsSigned(hash, v, r, s);
+        // }
+        // else
+        // {
+        //     emit notSignedIsSigned(hash, v, r, s);
+        // }
 
         return true;
     }
@@ -78,16 +78,18 @@ contract ExecuteSignedMVP{
         // ecrecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) returns (address):
         // recover address associated with the public key from elliptic curve signature,
         //return zero on error
-        emit returnAddress(ecrecover(hash, v, r, s));
-        return ecrecover(hash, v, r, s) == p;
+        address src = ecrecover(hash,v,r,s);
+        emit returnAddress(src);
+        return src == p;
     }
 
     function verifySign(address signer, bytes32 hash, uint8 v, bytes32 r, bytes32 s) private returns(bool)
     {
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         bytes32 prefixedHash = keccak256(prefix, hash);
-        emit returnAddress(ecrecover(prefixedHash, v, r, s));
-        return ecrecover(prefixedHash, v, r, s) == signer;
+        address src = ecrecover(prefixedHash,v,r,s);
+        emit returnAddress(src);
+        return src == signer;
     }
 
     function kill() public
