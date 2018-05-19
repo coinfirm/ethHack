@@ -18,27 +18,28 @@ contract ExecuteSignedMVP{
     //function executeSigned(address to, address from, uint256 value, bytes data, uint nonce, uint gasPrice, uint gasLimit, address gasToken, operationType bytes messageSignatures) public returns(bool){
     function executeSigned(bytes data, bytes32 hash, uint8 v, bytes32 r, bytes32 s) public returns(uint)
     {
-        if (verifySign(owner, hash, v, r, s))
-        {
-            return 1;
-            // emit signedVerifySign(data, hash, v, r, s);
-        }
-        else
-        {
-            return 2;
-            // emit notSignedVerifySign(data, hash, v, r, s);
-        }
+        // if (verifySign(owner, hash, v, r, s))
+        // {
+        //     return 1;
+        //     // emit signedVerifySign(data, hash, v, r, s);
+        // }
+        // else
+        // {
+        //     return 2;
+        //     // emit notSignedVerifySign(data, hash, v, r, s);
+        // }
 
-        if (isSigned(owner, hash, v, r, s))
-        {
-            return 3;
-            // emit signedIsSigned(data, hash, v, r, s);
-        }
-        else
-        {
-            return 4;
-            // emit notSignedIsSigned(data, hash, v, r, s);
-        }
+        // if (isSigned(owner, hash, v, r, s))
+        // {
+        //     return 3;
+        //     // emit signedIsSigned(data, hash, v, r, s);
+        // }
+        // else
+        // {
+        //     return 4;
+        //     // emit notSignedIsSigned(data, hash, v, r, s);
+        // }
+        return 10;
     }
 
     function isSigned(address p, bytes32 hash, uint8 v, bytes32 r, bytes32 s) pure private returns(bool)
