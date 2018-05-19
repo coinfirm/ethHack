@@ -1,0 +1,32 @@
+:host{
+  section{
+    max-width: 400px;
+    margin: 0 auto;
+
+    h1{
+      font-weight: 100;
+      font-size: 2rem;
+      letter-spacing: 0.2rem;
+    }
+
+    label{
+      margin-top: 20px;
+    }
+
+    button{
+      display: block;
+      margin: 0 auto;
+      background: #00c9b7;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      width: 180px;
+      height: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.094em;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+  }
+}

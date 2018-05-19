@@ -20,12 +20,12 @@ export class ContractsService {
   constructor() {
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
-      // this._web3 = new Web3(window.web3.currentProvider);
-      this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+      this._web3 = new Web3(window.web3.currentProvider);
+      // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     } else {
-      this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+      // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
       
-      // alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
+      alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
     }
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
   }
@@ -53,7 +53,7 @@ export class ContractsService {
             const v = this._web3.toDecimal('0x' + sig.slice(128, 130));
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
-             this._tokenContract.executeSigned(msg, sig, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
+             this._tokenContract.executeSigned(h, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
                console.log('err: ', err2);
                console.log('execute: ', result);
              });
