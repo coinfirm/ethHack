@@ -30,7 +30,7 @@ export class ContractsService {
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
   }
 
-  public async test() {
+  public async executeSign() {
     if (this._accounts == null) {
       this._accounts = await new Promise((resolve, reject) => {
         this._web3.eth.getAccounts((err, accs) => {
@@ -43,10 +43,12 @@ export class ContractsService {
             return;
           }
           const msg = '0x8CbaC5e4d803bE2A3A5cd3DbE7174504c6DD0c1C';
-
+          console.log('signing');
           const h = this._web3.sha3(msg);
           this._web3.eth.sign(accs[0], h, (err, sig) => {
             console.log('callback');
+            console.log('err: ', err);
+            console.log('sig: ', sig);
             sig = sig.slice(2);
             const r = `0x${sig.slice(0, 64)}`;
             const s = `0x${sig.slice(64, 128)}`;
@@ -54,15 +56,11 @@ export class ContractsService {
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
             // 'addr' to add the addr to id
-             this._tokenContract.executeSigned(h, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
+            const addr = '0x4E90a36B45879F5baE71B57Ad525e817aFA54890';
+             this._tokenContract.executeSigned(addr, h, v, r, s, {from: accs[0], gas: 1000000 }, (err2, result) => {
                console.log('err: ', err2);
                console.log('execute: ', result);
              });
-            
-            //this._tokenContract.testMe.call(3, (err2, res) => {
-            //  console.log('err: ', err2);
-            //  console.log('result: ', res);
-            //});
             resolve(accs);
           });
         });
