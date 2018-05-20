@@ -32,7 +32,7 @@ contract ExecuteSignedMVP{
         return keysCounter;
     }
 
-    function removeKey(uint _id) private
+    function removeKey(uint _id) public
     {
         require(activeKeysCounter > 1);
         activeKeysCounter--;
@@ -56,7 +56,7 @@ contract ExecuteSignedMVP{
         }
     }
 
-    function addKey(address _address) private
+    function addKey(address _address) public
     {
         activeKeysCounter++;
         keys[keysCounter++]._key = _address;
