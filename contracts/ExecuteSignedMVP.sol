@@ -68,7 +68,6 @@ contract ExecuteSignedMVP{
       ) 
       public returns(bool)
     {
-<<<<<<< HEAD
         uint256 gasStart;
         uint256 gasUsed;
         uint256 bonus;
