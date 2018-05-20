@@ -25,7 +25,7 @@ export class LoginComponent {
     this.contractsService.keysSize().then((size) => {
       for (let i = 0; i < parseInt(size, 10); i++) {
         this.getKey(i).then((key) => {
-          if (key === this.key) {
+          if (key.toLowerCase() === this.key.toLowerCase()) {
             this.loading = false;
             this.done = true;
             setTimeout(() => {
