@@ -93,7 +93,7 @@ contract ExecuteSignedMVP{
         bonus = SafeMath.mul(SafeMath.div(gasUsed,100), 5);
 
         result = SafeMath.add(gasUsed, bonus);
-        msg.sender.transfer(SafeMath.mul(result,10**9);
+        msg.sender.transfer(SafeMath.mul(result,10**9));
 
         return status;
     }
