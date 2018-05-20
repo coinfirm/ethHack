@@ -145,13 +145,22 @@ export class ContractsService {
     }) as Promise<string>;
   }
 
-  public async getBalance(): Promise<string> {
+  public async getMyBalance(): Promise<string> {
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
       this.getAccount().then(acc => {
         this._web3.eth.getBalance(acc, (err, balance) => {
           resolve((parseFloat((balance)) / 1000000000000000000).toString());
         });
+      });
+    }) as Promise<string>;
+  }
+
+  public async getBalance(address: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+      this._web3.eth.getBalance(address, (err, balance) => {
+        resolve((parseFloat((balance)) / 1000000000000000000).toString());
       });
     }) as Promise<string>;
   }

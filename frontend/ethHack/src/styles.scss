@@ -89,3 +89,9 @@ input.mat-input-element{
     }
   }
 }
+
+.mat-list {
+  /deep/ .mat-list-item {
+    height: 70px !important;
+  }
+}

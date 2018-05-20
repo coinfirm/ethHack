@@ -8,15 +8,19 @@ import { ContractsService } from '../../contracts.service';
 })
 export class HomeComponent {
   public keys = [];
+  public balances = [];
   public balance: string;
 
   constructor(private contractsService: ContractsService) {
     this.contractsService.keysSize().then(size => {
       for (let i = 0; i < parseInt(size, 10); i++) {
-        this.keys.push(this.getKey(i));
+        const key = this.getKey(i).then(res => {
+          this.keys.push(res);
+          this.balances.push(this.contractsService.getBalance(res));
+        });
       }
     });
-    this.contractsService.getBalance().then(balance => {
+    this.contractsService.getMyBalance().then(balance => {
       this.balance = balance;
     });
   }

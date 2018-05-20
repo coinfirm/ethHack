@@ -1,31 +1,35 @@
 <div class="container">
-    <h1 class="header">Hack ETH - Dashboard</h1>    
+    <h1 class="header">Hack ETH - Dashboard</h1>
     <div class="row">
+        <div class="col-md-6">
+            <mat-card class="card-cs">
+                <h1>My balance</h1>
+                <h1>{{balance}}</h1>
+            </mat-card>
+        </div>
         <div class="col-md-6">
             <app-add-key></app-add-key>
         </div>
-        <div class="col-md-6">
-                <mat-card class="card-cs">
-                        <h1>My balance</h1>
-                        <h1>{{balance}}</h1>
-                    </mat-card>
-            </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <br>
-            <app-send-to></app-send-to>
+            <mat-card class="card-cs">
+                <h1>My devices</h1>
+                <mat-list>
+                    <mat-list-item *ngFor="let key of keys; let i=index">
+                        <div>
+                            <p>{{key}}</p>
+                            <p>{{balances[i] | async}}</p>
+                        </div>
+                        <i class="material-icons" (click)="delete(i)">delete_forever</i>
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card>
         </div>
         <div class="col-md-6">
-                <mat-card class="card-cs">
-                        <h1>My devices</h1>
-                        <mat-list>
-                            <mat-list-item *ngFor="let key of keys; let i=index">
-                                <span>{{ key | async }}</span><i class="material-icons" (click)="delete(i)">delete_forever</i>
-                                <mat-divider></mat-divider>
-                            </mat-list-item>
-                        </mat-list>
-                    </mat-card>
+            <br>
+            <app-send-to></app-send-to>
         </div>
     </div>
 </div>
