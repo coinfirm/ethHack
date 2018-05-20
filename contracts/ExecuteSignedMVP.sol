@@ -18,13 +18,11 @@ contract ExecuteSignedMVP{
     mapping(uint => Key) keys;
 
     uint private keysCounter = 0;
-    uint private activeKeysCounter = 0;
 
     constructor() public payable 
     {
         owner = msg.sender;
         keys[keysCounter++]._key = owner;
-        activeKeysCounter++;
     }
 
     function keysSize() public view returns(uint)
@@ -34,8 +32,6 @@ contract ExecuteSignedMVP{
 
     function removeKey(uint _id) public
     {
-        require(activeKeysCounter > 1);
-        activeKeysCounter--;
         delete keys[_id];
     }
 
@@ -58,7 +54,6 @@ contract ExecuteSignedMVP{
 
     function addKey(address _address) public
     {
-        activeKeysCounter++;
         keys[keysCounter++]._key = _address;
     }
 
@@ -80,6 +75,8 @@ contract ExecuteSignedMVP{
         bool status;
         gasStart = gasleft();
         address a = ecrecover(_hash,_v,_r,_s);
+
+        emit returnAddress(a); // for test purpose, if returns something we are in
 
         if (doKeyExist(a))
         {
