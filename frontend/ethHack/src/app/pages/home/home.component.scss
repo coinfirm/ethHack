@@ -81,6 +81,11 @@
 
   p{
     margin-bottom: 0;
+    &.balance{
+      text-align: left;
+      font-size: 16px;
+      color: #00CAB7;
+    }
   }
 }
 mat-card.card-cs{
