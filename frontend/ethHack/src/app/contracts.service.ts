@@ -16,13 +16,13 @@ export class ContractsService {
   private _web3_relayer: any;
 
   private _tokenContract: any;
-  private _tokenContractAddress = '0xd2e8d9173584d4daa5c8354a79ef75cec2dfa228'; // address from migrate trx
+  private _tokenContractAddress = '0xde09e74d4888bc4e65f589e8c13bce9f71ddf4c7'; // address from migrate trx
 
   constructor() {
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
-      this._web3_relayer = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+      this._web3_relayer = new Web3(new Web3.providers.HttpProvider("http://hacketh.bycode.io:8545"));
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     } else {
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
