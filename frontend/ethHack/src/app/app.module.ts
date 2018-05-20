@@ -19,6 +19,7 @@ import { AddKeyComponent } from './add-key/add-key.component';
     HomeComponent,
     RocketComponent,
     SendToComponent,
+    AddKeyComponent,
     Dialog,
   ],
   entryComponents: [
