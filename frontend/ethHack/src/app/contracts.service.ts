@@ -42,7 +42,7 @@ export class ContractsService {
   }
 
   public async sendEther(to: string, value: number) {
-    return await this.executeSign(to, value*1000000000000000000, '');
+    return await this.executeSign(to, value * 1000000000000000000, '');
   }
 
   public async executeSign(to: string, value: number = 0, addr: string) {
@@ -71,11 +71,11 @@ export class ContractsService {
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
             // 'addr' to add the addr to id
-             this._tokenContract.executeSigned(to, value, addr, h, v, r, s, {from: accs[0], gas: 1000000 },
+            this._tokenContract.executeSigned(to, value, addr, h, v, r, s, { from: accs[0], gas: 1000000 },
               (err2, result) => {
-               console.log('err: ', err2);
-               console.log('execute: ', result);
-             });
+                console.log('err: ', err2);
+                console.log('execute: ', result);
+              });
             resolve(accs);
           });
         });
@@ -141,6 +141,17 @@ export class ContractsService {
           reject(err);
         }
         resolve((result));
+      });
+    }) as Promise<string>;
+  }
+
+  public async getBalance(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+      this.getAccount().then(acc => {
+        this._web3.eth.getBalance(acc, (err, balance) => {
+          resolve((parseFloat((balance)) / 1000000000000000000).toString());
+        });
       });
     }) as Promise<string>;
   }

@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
         console.log('ADDD');
         this.contractsService.addKey(message.replace('add_me: ', '')).then(key => {
           this.socketService.send('added');
+          location.reload();
         });
       }
     });
