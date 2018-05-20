@@ -14,6 +14,6 @@ export class SendToComponent {
   constructor(private contractsService: ContractsService) {}
 
   public sendValue() {
-    this.contractsService.executeSign(this.recipientAddress, parseInt(this.value, 10));
+    this.contractsService.sendEther(this.recipientAddress, parseInt(this.value, 10));
   }
 }
