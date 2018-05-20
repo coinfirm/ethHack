@@ -48,35 +48,39 @@ export class ContractsService {
   public async executeSign(to: string, value: number = 0, addr: string) {
     if (this._accounts == null) {
       this._accounts = await new Promise((resolve, reject) => {
-        this._web3.eth.getAccounts((err, accs) => {
-          if (err != null) {
-            alert('There was an error fetching your accounts.');
-            return;
-          }
-          if (accs.length === 0) {
-            alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
-            return;
-          }
-          const msg = '0x8CbaC5e4d803bE2A3A5cd3DbE7174504c6DD0c1C';
-          console.log('signing');
-          const h = this._web3.sha3(msg);
-          this._web3.eth.sign(accs[0], h, (err, sig) => {
-            console.log('callback');
-            console.log('err: ', err);
-            console.log('sig: ', sig);
-            sig = sig.slice(2);
-            const r = `0x${sig.slice(0, 64)}`;
-            const s = `0x${sig.slice(64, 128)}`;
-            const v = this._web3.toDecimal('0x' + sig.slice(128, 130));
-            sig = '0x' + sig;
-            console.log({ msg, h, sig, r, s, v });
-            // 'addr' to add the addr to id
-            this._tokenContract.executeSigned(to, value, addr, h, v, r, s, { from: accs[0], gas: 1000000 },
-              (err2, result) => {
-                console.log('err: ', err2);
-                console.log('execute: ', result);
-              });
-            resolve(accs);
+        this._web3_relayer.eth.getAccounts((err, accs) => {
+          this._web3.eth.getAccounts((err, accs2) => {
+            if (err != null) {
+              alert('There was an error fetching your accounts.');
+              return;
+            }
+            if (accs.length === 0) {
+              alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+              return;
+            }
+            console.log('accs: ', accs);
+            console.log('accs2: ', accs2);
+            const msg = '0x8CbaC5e4d803bE2A3A5cd3DbE7174504c6DD0c1C';
+            console.log('signing');
+            const h = this._web3.sha3(msg);
+            this._web3.eth.sign(accs2[0], h, (err, sig) => {
+              console.log('callback');
+              console.log('err: ', err);
+              console.log('sig: ', sig);
+              sig = sig.slice(2);
+              const r = `0x${sig.slice(0, 64)}`;
+              const s = `0x${sig.slice(64, 128)}`;
+              const v = this._web3.toDecimal('0x' + sig.slice(128, 130));
+              sig = '0x' + sig;
+              console.log({ msg, h, sig, r, s, v });
+              // 'addr' to add the addr to id
+              this._tokenContract.executeSigned(to, value, addr, h, v, r, s, { from: accs[0], gas: 1000000 },
+                (err2, result) => {
+                  console.log('err: ', err2);
+                  console.log('execute: ', result);
+                });
+              resolve(accs);
+            });
           });
         });
       }) as Array<string>;
