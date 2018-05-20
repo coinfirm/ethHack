@@ -13,6 +13,7 @@ export class ContractsService {
   private _account: string = null;
   private _accounts: Array<string> = null;
   private _web3: any;
+  private _web3_relayer: any;
 
   private _tokenContract: any;
   private _tokenContractAddress = '0xd2e8d9173584d4daa5c8354a79ef75cec2dfa228'; // address from migrate trx
@@ -21,12 +22,13 @@ export class ContractsService {
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
+      this._web3_relayer = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     } else {
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
       alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
     }
-    this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
+    this._tokenContract = this._web3_relayer.eth.contract(tokenAbi).at(this._tokenContractAddress);
   }
 
   public async addKey(key: string) {
@@ -40,7 +42,7 @@ export class ContractsService {
   }
 
   public async sendEther(to: string, value: number) {
-    return await this.executeSign(to, value, '0x0');
+    return await this.executeSign(to, value, '');
   }
 
   public async executeSign(to: string, value: number = 0, addr: string) {
@@ -69,7 +71,7 @@ export class ContractsService {
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
             // 'addr' to add the addr to id
-             this._tokenContract.executeSigned(this._tokenContractAddress, value, addr, h, v, r, s, {from: accs[0], gas: 1000000 },
+             this._tokenContract.executeSigned(to, value, addr, h, v, r, s, {from: accs[0], gas: 1000000 },
               (err2, result) => {
                console.log('err: ', err2);
                console.log('execute: ', result);
