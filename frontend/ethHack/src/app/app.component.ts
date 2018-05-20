@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
   openDialog(message): void {
     const dialogRef = this.dialog.open(Dialog, {
-      data: { address: message.replace('add_me:', ''); }
+      data: { address: message.replace('add_me:', '') }
     });
 
     dialogRef.afterClosed().subscribe(result => {
