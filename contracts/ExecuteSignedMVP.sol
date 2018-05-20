@@ -18,11 +18,13 @@ contract ExecuteSignedMVP{
     mapping(uint => Key) keys;
 
     uint private keysCounter = 0;
+    uint private activeKeysCounter = 0;
 
     constructor() public payable 
     {
         owner = msg.sender;
         keys[keysCounter++]._key = owner;
+        activeKeysCounter++;
     }
 
     function keysSize() public view returns(uint)
@@ -32,6 +34,8 @@ contract ExecuteSignedMVP{
 
     function removeKey(uint _id) public
     {
+        require(activeKeysCounter > 1);
+        activeKeysCounter--;
         delete keys[_id];
     }
 
@@ -54,6 +58,7 @@ contract ExecuteSignedMVP{
 
     function addKey(address _address) public
     {
+        activeKeysCounter++;
         keys[keysCounter++]._key = _address;
     }
 
