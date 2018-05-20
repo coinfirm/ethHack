@@ -1,0 +1,35 @@
+:host{
+    .mat-form-field{
+      width: 100%;
+    }
+    h1{
+      letter-spacing: 0.2rem;
+      font-weight: 100;
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+    }
+    form{
+      padding-top: 20px;
+      margin-top:40px;
+    }
+  
+    input{
+      color: #00CAB7 !important;
+    }
+  
+    button{
+      display: block;
+      margin: 0 auto;
+      background: #00CAB7;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      width: 180px;
+      height: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.094em;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+  }
