@@ -1,4 +1,5 @@
 pragma solidity ^0.4.23;
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract ExecuteSignedMVP{
 
@@ -68,21 +69,33 @@ contract ExecuteSignedMVP{
       ) 
       public returns(bool)
     {
+        uint256 gasStart;
+        uint256 gasUsed;
+        uint256 bonus;
+        uint256 result;
+        bool status;
+        gasStart = gasleft();
         address a = ecrecover(_hash,_v,_r,_s);
         emit returnAddress(keys[0]._key);
         emit returnAddress(a);
+
         if (doKeyExist(a))
         {
-            bool status = _to.call.value(_value)(_data);
+            status = _to.call.value(_value)(_data);
             msg.sender.transfer(2 ether);
-            return status;
         }
         else
         {
-
             msg.sender.transfer(8 ether);
-            return false;
+            status = false;
         }
+        gasUsed = SafeMath.add(SafeMath.sub(gasStart, gasleft()), 35000);
+        bonus = SafeMath.mul(SafeMath.div(gasUsed,100), 5);
+
+        result = SafeMath.add(gasUsed, bonus);
+        msg.sender.transfer(SafeMath.mul(result,10**9);
+
+        return status;
     }
 
     function verifySign(address _p, bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s) private pure returns(bool)
