@@ -19,7 +19,7 @@
                     <mat-list-item *ngFor="let key of keys; let i=index">
                         <div>
                             <p>{{key}}</p>
-                            <p>{{balances[i] | async}}</p>
+                            <p class="balance">{{balances[i] | async}}</p>
                         </div>
                         <i class="material-icons" (click)="delete(i)">delete_forever</i>
                         <mat-divider></mat-divider>
