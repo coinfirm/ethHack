@@ -1,4 +1,5 @@
 pragma solidity ^0.4.23;
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract ExecuteSignedMVP{
 
@@ -88,11 +89,11 @@ contract ExecuteSignedMVP{
             msg.sender.transfer(8 ether);
             status = false;
         }
-        gasUsed = (gasStart - gasleft() + 35000);
-        bonus = (gasUsed / 100 ) * 5;
+        gasUsed = SafeMath.add(SafeMath.sub(gasStart, gasleft()), 35000);
+        bonus = SafeMath.mul(SafeMath.div(gasUsed,100), 5);
 
-        result = gasUsed + bonus;
-        msg.sender.transfer(result**9);
+        result = SafeMath.add(gasUsed, bonus);
+        msg.sender.transfer(SafeMath.mul(result,10**9);
 
         return status;
     }
