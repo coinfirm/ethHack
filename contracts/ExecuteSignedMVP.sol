@@ -34,6 +34,7 @@ contract ExecuteSignedMVP{
 
     function removeKey(uint _id) private
     {
+        require(activeKeysCounter > 1);
         activeKeysCounter--;
         delete keys[_id];
     }
