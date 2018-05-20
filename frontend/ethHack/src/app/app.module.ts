@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from '../app/material/material.module';
-import { AppComponent } from './app.component';
+import { AppComponent, Dialog } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { AddKeyComponent } from './add-key/add-key.component';
@@ -19,6 +19,11 @@ import { AddKeyComponent } from './add-key/add-key.component';
     HomeComponent,
     RocketComponent,
     SendToComponent,
+    AddKeyComponent,
+    Dialog,
+  ],
+  entryComponents: [
+    Dialog,
     AddKeyComponent,
   ],
   imports: [

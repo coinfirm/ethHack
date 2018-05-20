@@ -1,0 +1,6 @@
+<h3>{{data.address}}</h3>
+<p>requests to be added to your Identity</p>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Reject</button>
+    <button mat-button class="confirm" [mat-dialog-close]="true" cdkFocusInitial>Add</button>
+</div>

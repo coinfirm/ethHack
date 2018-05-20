@@ -2,6 +2,7 @@
 @import '~bootstrap/scss/bootstrap-reboot';
 @import '~bootstrap/scss/bootstrap-grid';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import 'mixins';
 
 html{
   max-height: 100vh;
@@ -62,5 +63,35 @@ input.mat-input-element{
   }
   .mat-form-field-label{
     color: #00c9b7 !important;
+  }
+}
+
+.mat-dialog-container {
+  /deep/ h3 {
+    color: #00c9b7;
+    letter-spacing: 0.3rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 100;
+  }
+  /deep/ p{
+    margin-top: 20px;
+    letter-spacing: 0.2rem;
+    text-align: center;
+  }
+  .mat-dialog-actions{
+    button{
+      width: 47%;
+      color: red;
+      &.confirm{
+        color: #00c9b7;
+      }
+    }
+  }
+}
+
+.mat-list {
+  /deep/ .mat-list-item {
+    height: 70px !important;
   }
 }

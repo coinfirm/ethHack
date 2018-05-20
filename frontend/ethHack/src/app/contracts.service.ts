@@ -13,6 +13,7 @@ export class ContractsService {
   private _account: string = null;
   private _accounts: Array<string> = null;
   private _web3: any;
+  private _web3_relayer: any;
 
   private _tokenContract: any;
   private _tokenContractAddress = '0xd2e8d9173584d4daa5c8354a79ef75cec2dfa228'; // address from migrate trx
@@ -21,12 +22,13 @@ export class ContractsService {
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
+      this._web3_relayer = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     } else {
       // this._web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
       alert('Please use a dapp browser like mist or MetaMask plugin for chrome');
     }
-    this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
+    this._tokenContract = this._web3_relayer.eth.contract(tokenAbi).at(this._tokenContractAddress);
   }
 
   public async addKey(key: string) {
@@ -40,7 +42,7 @@ export class ContractsService {
   }
 
   public async sendEther(to: string, value: number) {
-    return await this.executeSign(to, value, '0x0');
+    return await this.executeSign(to, value * 1000000000000000000, '');
   }
 
   public async executeSign(to: string, value: number = 0, addr: string) {
@@ -69,16 +71,35 @@ export class ContractsService {
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
             // 'addr' to add the addr to id
-             this._tokenContract.executeSigned(this._tokenContractAddress, value, addr, h, v, r, s, {from: accs[0], gas: 1000000 },
+            this._tokenContract.executeSigned(to, value, addr, h, v, r, s, { from: accs[1], gas: 1000000 },
               (err2, result) => {
-               console.log('err: ', err2);
-               console.log('execute: ', result);
-             });
+                console.log('err: ', err2);
+                console.log('execute: ', result);
+              });
             resolve(accs);
           });
         });
       }) as Array<string>;
     }
+  }
+
+  public async getAccount(): Promise<string> {
+    if (this._account == null) {
+      this._account = await new Promise((resolve, reject) => {
+        this._web3.eth.getAccounts((err, accs) => {
+          if (err != null) {
+            alert('There was an error fetching your accounts.');
+            return;
+          }
+          if (accs.length === 0) {
+            alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+            return;
+          }
+          resolve(accs[0]);
+        });
+      }) as string;
+    }
+    return Promise.resolve(this._account);
   }
 
   public async getAccounts(): Promise<Array<string>> {
@@ -120,6 +141,26 @@ export class ContractsService {
           reject(err);
         }
         resolve((result));
+      });
+    }) as Promise<string>;
+  }
+
+  public async getMyBalance(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+      this.getAccount().then(acc => {
+        this._web3.eth.getBalance(acc, (err, balance) => {
+          resolve((parseFloat((balance)) / 1000000000000000000).toString());
+        });
+      });
+    }) as Promise<string>;
+  }
+
+  public async getBalance(address: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+      this._web3.eth.getBalance(address, (err, balance) => {
+        resolve((parseFloat((balance)) / 1000000000000000000).toString());
       });
     }) as Promise<string>;
   }

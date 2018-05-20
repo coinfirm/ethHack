@@ -1,24 +1,82 @@
-import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { SocketService } from './socket.service';
+import { Component, OnInit } from '@angular/core';
 import { ContractsService } from './contracts.service';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  public bark: string;
-  public text: string;
+export class AppComponent implements OnInit {
   public accounts: Array<string>;
+  public ioConnection: any;
 
-  constructor(contractsService: ContractsService) {
-    // contractsService.test();
-    // contractsService.getBark().then(bark => {
-    //   contractsService.test();
-    //   this.bark = bark;
-    // });
-    // // contractsService.setText('dupax');
-    // contractsService.getText().then(text => this.text = text);
-    // contractsService.getAccounts().then(accs => this.accounts = accs);
+  constructor(private router: Router,
+              private contractsService: ContractsService,
+              private socketService: SocketService,
+              public dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.initIoConnection();
+  }
+
+  openDialog(message): void {
+    const dialogRef = this.dialog.open(Dialog, {
+      data: { address: message.replace('add_me:', '') }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        console.log('ADDD');
+        this.contractsService.addKey(message.replace('add_me: ', '')).then(key => {
+          this.socketService.send('added');
+          location.reload();
+        });
+      }
+    });
+  }
+
+  private initIoConnection(): void {
+    this.socketService.initSocket();
+
+    this.socketService.onMessage()
+      .subscribe((message: string) => {
+        console.log('message: ', message);
+        if (window.location.href.indexOf('home') > -1 && message !== 'added') {
+          this.openDialog(message);
+        } else if (message.replace('add_me: ', '') === 'added') {
+          this.router.navigate(['/home']);
+        }
+      });
+
+    this.socketService.onConnection()
+      .subscribe(() => {
+        console.log('connected');
+      });
+
+    this.socketService.onDisconnected()
+      .subscribe(() => {
+        console.log('disconnected');
+      });
   }
 }
+
+@Component({
+  selector: 'app-dialog',
+  templateUrl: 'app-dialog.html',
+})
+export class Dialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<Dialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+

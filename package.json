@@ -1,0 +1,22 @@
+{
+  "name": "eth-hack-backend",
+  "version": "1.0.0",
+  "description": "``` $ganache-cli $truffle compile $truffle migrate ```",
+  "main": "truffle-config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coinfirm/ethHack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coinfirm/ethHack/issues"
+  },
+  "homepage": "https://github.com/coinfirm/ethHack#readme",
+  "dependencies": {
+    "ws": "^5.1.1"
+  }
+}

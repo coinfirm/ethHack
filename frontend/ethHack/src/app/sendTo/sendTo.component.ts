@@ -13,7 +13,8 @@ export class SendToComponent {
 
   constructor(private contractsService: ContractsService) {}
 
-  public sendValue() {
-    this.contractsService.sendEther(this.recipientAddress, parseInt(this.value, 10));
+  public async sendValue() {
+    await this.contractsService.sendEther(this.recipientAddress, parseInt(this.value, 10));
+    //location.reload();
   }
 }

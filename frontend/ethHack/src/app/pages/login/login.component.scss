@@ -1,3 +1,4 @@
+@import '../../../mixins';
 :host{
   section{
     max-width: 400px;
@@ -6,6 +7,7 @@
     min-height: 350px;
 
     h1{
+      @include easeAnimation;
       font-weight: 100;
       font-size: 2.5rem;
       letter-spacing: 0.2rem;
@@ -16,11 +18,13 @@
     }
 
     mat-form-field{
+      @include easeAnimation;
       width: 90%;
       margin-top: 60px;
     }
 
     form > input{
+      @include easeAnimation;
       width: 90%;
       margin: 0 auto;
       margin-top: 60px;
@@ -31,6 +35,7 @@
     }
 
     button{
+      @include easeAnimation;
       display: block;
       margin: 0 auto;
       background: #00CAB7;
@@ -58,9 +63,13 @@
     }
 
     p{
-      color: red;
+      @include easeAnimation;
+      color: rgb(255, 120, 120);
       margin-top: 10px;
       margin-bottom: -20px;
+      &.info{
+        color: white;
+      }
     }
   }
   /deep/ app-rocket{

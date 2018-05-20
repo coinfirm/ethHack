@@ -1,3 +1,4 @@
+import { SocketService } from './../../socket.service';
 import { Component } from '@angular/core';
 import { ContractsService } from '../../contracts.service';
 import { Router } from '@angular/router';
@@ -13,16 +14,9 @@ export class LoginComponent {
   public error = false;
   public key: string;
 
-  constructor(private router: Router, private contractsService: ContractsService) {
-    this.contractsService.getKey(0).then((key) => {
-      console.log('key0: ', key);
-    });
-    this.contractsService.getKey(1).then((key) => {
-      console.log('key1: ', key);
-    });
-    this.contractsService.getKey(2).then((key) => {
-      console.log('key2: ', key);
-    });
+  constructor(private router: Router,
+              private contractsService: ContractsService,
+              private socketService: SocketService) {
   }
 
   public doneClick() {
@@ -43,6 +37,17 @@ export class LoginComponent {
           }
         });
       }
+    });
+  }
+
+  public onChange() {
+    this.error = false;
+  }
+
+  public signIn() {
+    this.loading = true;
+    this.contractsService.getAccount().then((addr) => {
+      this.socketService.send(addr);
     });
   }
 

@@ -8,12 +8,20 @@ import { ContractsService } from '../../contracts.service';
 })
 export class HomeComponent {
   public keys = [];
+  public balances = [];
+  public balance: string;
 
   constructor(private contractsService: ContractsService) {
     this.contractsService.keysSize().then(size => {
       for (let i = 0; i < parseInt(size, 10); i++) {
-        this.keys.push(this.getKey(i));
+        const key = this.getKey(i).then(res => {
+          this.keys.push(res);
+          this.balances.push(this.contractsService.getBalance(res));
+        });
       }
+    });
+    this.contractsService.getMyBalance().then(balance => {
+      this.balance = balance;
     });
   }
 
@@ -25,8 +33,9 @@ export class HomeComponent {
     });
   }
 
-  public delete(index: number) {
-    this.contractsService.removeKey(index);
+  public async delete(index: number) {
+    await this.contractsService.removeKey(index);
     this.keys.splice(index, 1);
+    //location.reload();
   }
 }
