@@ -68,6 +68,25 @@ export class ContractsService {
     }
   }
 
+  public async getAccount(): Promise<string> {
+    if (this._account == null) {
+      this._account = await new Promise((resolve, reject) => {
+        this._web3.eth.getAccounts((err, accs) => {
+          if (err != null) {
+            alert('There was an error fetching your accounts.');
+            return;
+          }
+          if (accs.length === 0) {
+            alert('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+            return;
+          }
+          resolve(accs[0]);
+        });
+      }) as string;
+    }
+    return Promise.resolve(this._account);
+  }
+
   public async getAccounts(): Promise<Array<string>> {
     if (this._accounts == null) {
       this._accounts = await new Promise((resolve, reject) => {

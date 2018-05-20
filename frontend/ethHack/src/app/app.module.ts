@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from '../app/material/material.module';
-import { AppComponent } from './app.component';
+import { AppComponent, Dialog } from './app.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -17,6 +17,10 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     RocketComponent,
     SendToComponent,
+    Dialog,
+  ],
+  entryComponents: [
+    Dialog
   ],
   imports: [
     BrowserModule,
