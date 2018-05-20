@@ -9,6 +9,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from '../app/material/material.module';
 import { AppComponent, Dialog } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { AddKeyComponent } from './add-key/add-key.component';
 
 @NgModule({
   declarations: [
@@ -20,14 +22,18 @@ import { FormsModule } from '@angular/forms';
     Dialog,
   ],
   entryComponents: [
-    Dialog
+    Dialog,
+    AddKeyComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

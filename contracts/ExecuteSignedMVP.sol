@@ -1,5 +1,5 @@
 pragma solidity ^0.4.23;
-import "zeppelin-solidity/contracts/math/SafeMath.sol";
+import "./SafeMath.sol";
 
 contract ExecuteSignedMVP{
 
@@ -32,7 +32,6 @@ contract ExecuteSignedMVP{
 
     function removeKey(uint _id) public
     {
-        require(owner == msg.sender);
         delete keys[_id];
     }
 
@@ -76,24 +75,22 @@ contract ExecuteSignedMVP{
         bool status;
         gasStart = gasleft();
         address a = ecrecover(_hash,_v,_r,_s);
-        emit returnAddress(keys[0]._key);
-        emit returnAddress(a);
+
+        emit returnAddress(a); // for test purpose, if returns something we are in
 
         if (doKeyExist(a))
         {
             status = _to.call.value(_value)(_data);
-            msg.sender.transfer(2 ether);
-        }
+         }
         else
         {
-            msg.sender.transfer(8 ether);
             status = false;
         }
         gasUsed = SafeMath.add(SafeMath.sub(gasStart, gasleft()), 35000);
         bonus = SafeMath.mul(SafeMath.div(gasUsed,100), 5);
 
         result = SafeMath.add(gasUsed, bonus);
-        msg.sender.transfer(SafeMath.mul(result,10**9);
+        msg.sender.transfer(SafeMath.mul(result,10**9));
 
         return status;
     }

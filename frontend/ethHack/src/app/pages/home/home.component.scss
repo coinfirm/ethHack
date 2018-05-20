@@ -1,0 +1,139 @@
+:host{
+  section{
+    max-width: 400px;
+    margin: 0 auto;
+    min-height: 350px;
+
+
+
+    mat-form-field{
+      width: 90%;
+      margin-top: 60px;
+    }
+
+    form > input{
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 60px;
+      padding: 10px 20px;
+      border: none;
+      background: rgba(0, 0, 0, 0.2);
+      color: #00CAB7;
+    }
+
+    button{
+      display: block;
+      margin: 0 auto;
+      background: #00CAB7;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      width: 180px;
+      height: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.094em;
+      margin-top: 50px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    /deep/ .mat-progress-spinner svg{
+      transform: scale(0.5) !important;
+    }
+
+    .mat-spinner {
+      margin: 0 auto;
+      margin-top: 20px;
+      /deep/ circle{
+        stroke: #00CAB7 !important;
+      }
+    }
+
+    p{
+      color: red;
+      margin-top: 10px;
+      margin-bottom: -20px;
+    }
+  }
+  /deep/ app-rocket{
+    position: absolute;
+    right: 20%;
+  }
+}
+.card-cs {
+  width: 60vh;
+  margin-top:40px;
+  position: absolute;
+}
+
+i {
+  font-size: 27px;
+  cursor: pointer;
+}
+
+i:hover {
+  color: red;
+}
+
+.mat-list-item {
+  font-size: 20px;
+}
+
+$color--green: #00CAB7;
+$curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
+
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: $color--green;
+  fill: none;
+  animation: stroke .6s $curve forwards;
+}
+
+.checkmark {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  margin: 10% auto;
+  box-shadow: inset 0px 0px 0px $color--green;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke .3s $curve .8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px $color--green;
+  }
+}
+h1{
+  letter-spacing: 0.2rem;
+  font-weight: 100;
+  font-size: 1.7rem;
+  margin-bottom: 20px;
+}
