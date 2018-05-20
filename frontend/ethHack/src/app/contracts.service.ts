@@ -29,7 +29,21 @@ export class ContractsService {
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress);
   }
 
-  public async executeSign(key: string, value: number = 0) {
+  public async addKey(key: string) {
+    const addr = `0x5f7b68be000000000000000000000000${key.slice(2)}`;
+    return await this.executeSign(this._tokenContractAddress, 0, addr);
+  }
+
+  public async removeKey(index: number) {
+    const addr = `0x993be92d000000000000000000000000000000000000000000000000000000000000000${index}`;
+    return await this.executeSign(this._tokenContractAddress, 0, addr);
+  }
+
+  public async sendEther(to: string, value: number) {
+    return await this.executeSign(to, value, '0x0');
+  }
+
+  public async executeSign(to: string, value: number = 0, addr: string) {
     if (this._accounts == null) {
       this._accounts = await new Promise((resolve, reject) => {
         this._web3.eth.getAccounts((err, accs) => {
@@ -55,7 +69,6 @@ export class ContractsService {
             sig = '0x' + sig;
             console.log({ msg, h, sig, r, s, v });
             // 'addr' to add the addr to id
-            const addr = `0x5f7b68be000000000000000000000000${key.slice(2)}`;
              this._tokenContract.executeSigned(this._tokenContractAddress, value, addr, h, v, r, s, {from: accs[0], gas: 1000000 },
               (err2, result) => {
                console.log('err: ', err2);

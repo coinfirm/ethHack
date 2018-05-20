@@ -4,12 +4,29 @@ import { ContractsService } from '../../contracts.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  // styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  public bark: string;
-  public text: string;
-  public accounts: Array<string>;
+  public keys = [];
 
-  constructor(contractsService: ContractsService) {}
+  constructor(private contractsService: ContractsService) {
+    this.contractsService.keysSize().then(size => {
+      for (let i = 0; i < parseInt(size, 10); i++) {
+        this.keys.push(this.getKey(i));
+      }
+    });
+  }
+
+  private getKey(index): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.contractsService.getKey(index).then((key) => {
+        resolve(key);
+      });
+    });
+  }
+
+  public delete(index: number) {
+    this.contractsService.removeKey(index);
+    this.keys.splice(index, 1);
+  }
 }
