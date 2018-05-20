@@ -1,5 +1,5 @@
 pragma solidity ^0.4.23;
-import "zeppelin-solidity/contracts/math/SafeMath.sol";
+import "./SafeMath.sol";
 
 contract ExecuteSignedMVP{
 
