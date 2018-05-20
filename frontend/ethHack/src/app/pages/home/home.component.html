@@ -1,4 +1,5 @@
 <div class="container">
+    <h1 class="header">Hack ETH - Dashboard</h1>    
     <div class="row">
         <div class="col-md-6">
             <app-add-key></app-add-key>
@@ -8,7 +9,7 @@
                         <h1>My devices</h1>
                         <mat-list>
                             <mat-list-item *ngFor="let key of keys; let i=index">
-                                {{ key | async }}&nbsp;&nbsp;<i class="material-icons" (click)="delete(i)">delete_forever</i>
+                                <span>{{ key | async }}</span><i class="material-icons" (click)="delete(i)">delete_forever</i>
                                 <mat-divider></mat-divider>
                             </mat-list-item>
                         </mat-list>

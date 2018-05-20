@@ -29,9 +29,11 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result === true) {
+      if (result === true) {
         console.log('ADDD');
-        this.socketService.send('added');
+        this.contractsService.addKey(message.replace('add_me: ', '')).then(key => {
+          this.socketService.send('added');
+        });
       }
     });
   }
@@ -41,10 +43,10 @@ export class AppComponent implements OnInit {
 
     this.socketService.onMessage()
       .subscribe((message: string) => {
+        console.log('message: ', message);
         if (window.location.href.indexOf('home') > -1 && message !== 'added') {
-          console.log('no to ja Cie dodam! ', message);
           this.openDialog(message);
-        } else if (message === 'added') {
+        } else if (message.replace('add_me: ', '') === 'added') {
           this.router.navigate(['/home']);
         }
       });

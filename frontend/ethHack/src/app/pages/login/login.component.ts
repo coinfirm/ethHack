@@ -17,15 +17,6 @@ export class LoginComponent {
   constructor(private router: Router,
               private contractsService: ContractsService,
               private socketService: SocketService) {
-    this.contractsService.getKey(0).then((key) => {
-      console.log('key0: ', key);
-    });
-    this.contractsService.getKey(1).then((key) => {
-      console.log('key1: ', key);
-    });
-    this.contractsService.getKey(2).then((key) => {
-      console.log('key2: ', key);
-    });
   }
 
   public doneClick() {
