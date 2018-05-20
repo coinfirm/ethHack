@@ -30,7 +30,7 @@ contract ExecuteSignedMVP{
         return keysCounter;
     }
 
-    function removeKey(uint _id) private
+    function removeKey(uint _id) public
     {
         delete keys[_id];
     }
@@ -52,7 +52,7 @@ contract ExecuteSignedMVP{
         }
     }
 
-    function addKey(address _address) private
+    function addKey(address _address) public
     {
         keys[keysCounter++]._key = _address;
     }
