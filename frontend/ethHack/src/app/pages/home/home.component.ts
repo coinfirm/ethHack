@@ -25,8 +25,9 @@ export class HomeComponent {
     });
   }
 
-  public delete(index: number) {
-    this.contractsService.removeKey(index);
+  public async delete(index: number) {
+    await this.contractsService.removeKey(index);
     this.keys.splice(index, 1);
+    //location.reload();
   }
 }

@@ -11,8 +11,9 @@ export class AddKeyComponent {
 
   constructor(private contractsService: ContractsService) { }
 
-  public addKey() {
+  public async addKey() {
     console.log(this.key);
-    this.contractsService.addKey(this.key);
+    await this.contractsService.addKey(this.key);
+    //location.reload();
   }
 }

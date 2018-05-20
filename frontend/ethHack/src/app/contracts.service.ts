@@ -42,7 +42,7 @@ export class ContractsService {
   }
 
   public async sendEther(to: string, value: number) {
-    return await this.executeSign(to, value, '');
+    return await this.executeSign(to, value*1000000000000000000, '');
   }
 
   public async executeSign(to: string, value: number = 0, addr: string) {

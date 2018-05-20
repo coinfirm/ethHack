@@ -4,15 +4,7 @@
     margin: 0 auto;
     min-height: 350px;
 
-    h1{
-      font-weight: 100;
-      font-size: 2.5rem;
-      letter-spacing: 0.2rem;
-      color: white;
-      width: 90%;
-      margin: 0 auto;
-      margin-top: 40px;
-    }
+
 
     mat-form-field{
       width: 90%;
@@ -138,4 +130,10 @@ $curve: cubic-bezier(0.650, 0.000, 0.450, 1.000);
   100% {
     box-shadow: inset 0px 0px 0px 30px $color--green;
   }
+}
+h1{
+  letter-spacing: 0.2rem;
+  font-weight: 100;
+  font-size: 1.7rem;
+  margin-bottom: 20px;
 }
