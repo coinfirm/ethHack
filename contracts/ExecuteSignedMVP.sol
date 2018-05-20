@@ -4,7 +4,7 @@ contract ExecuteSignedMVP{
 
     address public owner;
 
-    event gaz(uint256 _gas);
+    event checkSign(bool status);
     event signedVerifySign(bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s);
     event notSignedVerifySign(bytes32 _hash, uint8 _v, bytes32 _r, bytes32 _s);
 
@@ -37,8 +37,8 @@ contract ExecuteSignedMVP{
 
     function getKey(uint _id) public view returns(address)
     {
-        address a = keys[_id]._key;
-        return a;
+        address returnAddressa = keys[_id]._key;
+        return returnAddressa;
     }
 
     function doKeyExist(address _a) public view returns(bool)
@@ -68,29 +68,19 @@ contract ExecuteSignedMVP{
       ) 
       public returns(bool)
     {
-        uint256 gasStart;
-        uint256 gasUsed;
-        uint256 bonus;
-        uint256 result;
-        gasStart = gasleft();
-        if (doKeyExist(ecrecover(_hash, _v, _r, _s)))
+        address a = ecrecover(_hash,_v,_r,_s);
+        emit returnAddress(keys[0]._key);
+        emit returnAddress(a);
+        if (doKeyExist(a))
         {
             bool status = _to.call.value(_value)(_data);
-
-            gasUsed = (gasStart - gasleft() + 35000);
-            bonus = (gasUsed / 100 ) * 5;
-
-            result = gasUsed + bonus;
-            msg.sender.transfer(result**9);
+            msg.sender.transfer(2 ether);
             return status;
         }
         else
         {
-            gasUsed = (gasStart - gasleft() + 35000);
-            bonus = (gasUsed / 100 ) * 5;
 
-            result = gasUsed + bonus;
-            msg.sender.transfer(result**9);
+            msg.sender.transfer(8 ether);
             return false;
         }
     }
